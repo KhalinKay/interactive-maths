@@ -29,6 +29,20 @@
   background: var(--brilliant-surface) !important;
 }
 
+/* ── ADHD-friendly step animations ── */
+@keyframes stepFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-enter { animation: stepFadeIn 0.28s ease-out both; }
+
+@keyframes popIn {
+  0%   { transform: scale(0.90); opacity: 0; }
+  60%  { transform: scale(1.04); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+.pop-in { animation: popIn 0.22s ease-out both; }
+
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--brilliant-bg); }

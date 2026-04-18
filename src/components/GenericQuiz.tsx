@@ -20,34 +20,50 @@ import { useProgress } from "@/context/ProgressContext";
 
 type BtnState = "idle" | "correct" | "wrong";
 
+const CHOICE_LABELS = ["A", "B", "C", "D"];
+const CHOICE_COLORS = ["#489BFC", "#27C07B", "#F7B035", "#B87CF5"];
+
 function AnswerBtn({
   label,
   state,
+  choiceIdx,
   onClick,
   disabled,
 }: {
   label: string;
   state: BtnState;
+  choiceIdx: number;
   onClick: () => void;
   disabled?: boolean;
 }) {
-  const styles: Record<BtnState, { bg: string; border: string; color: string }> = {
-    idle: { bg: "#262C30", border: "#30363B", color: "#E8ECF0" },
-    correct: { bg: "#27C07B18", border: "#27C07B", color: "#27C07B" },
-    wrong: { bg: "#F0525218", border: "#F05252", color: "#F05252" },
-  };
-  const s = styles[state];
+  const accent = CHOICE_COLORS[choiceIdx] ?? "#489BFC";
+  let bg = "#1E2225";
+  let border = "#30363B";
+  let color = "#E8ECF0";
+  let lBg = accent + "22";
+  let lColor = accent;
+
+  if (state === "correct") {
+    bg = "#27C07B0D"; border = "#27C07B"; color = "#27C07B";
+    lBg = "#27C07B33"; lColor = "#27C07B";
+  } else if (state === "wrong") {
+    bg = "#F052520D"; border = "#F05252"; color = "#F05252";
+    lBg = "#F0525233"; lColor = "#F05252";
+  }
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className="w-full rounded-xl font-semibold text-base px-4 py-3.5 text-left transition-all duration-150 active:scale-95 disabled:cursor-default enabled:hover:brightness-110"
-      style={{
-        backgroundColor: s.bg,
-        border: `2px solid ${s.border}`,
-        color: s.color,
-      }}
+      className="flex items-center gap-3 w-full rounded-xl font-semibold text-base px-4 py-3.5 text-left transition-all duration-150 active:scale-95 disabled:cursor-default enabled:hover:brightness-110"
+      style={{ backgroundColor: bg, border: `2px solid ${border}`, color }}
     >
+      <span
+        className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
+        style={{ backgroundColor: lBg, color: lColor }}
+      >
+        {CHOICE_LABELS[choiceIdx]}
+      </span>
       {label}
     </button>
   );
@@ -187,6 +203,7 @@ export default function GenericQuiz({
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [showHint, setShowHint] = useState(false);
+  const [results, setResults] = useState<("correct" | "wrong" | null)[]>(() => Array(total).fill(null));
   const confettiFiredRef = useRef(false);
 
   const q = questions[idx];
@@ -210,6 +227,7 @@ export default function GenericQuiz({
     setIsCorrect(correct);
     setScore((s) => (correct ? s + 1 : s));
     setStreak((s) => (correct ? s + 1 : 0));
+    setResults((r) => { const next = [...r]; next[idx] = correct ? "correct" : "wrong"; return next; });
     setPhase("feedback");
   }
 
@@ -233,6 +251,7 @@ export default function GenericQuiz({
     setStreak(0);
     setSelected(null);
     setShowHint(false);
+    setResults(Array(total).fill(null));
   }
 
   if (phase === "complete") {
@@ -249,45 +268,48 @@ export default function GenericQuiz({
     );
   }
 
-  const progress = (idx / total) * 100;
   const isEquation = q.equation && q.prompt.length < 70;
 
   return (
     <div className="flex flex-col gap-5 max-w-2xl mx-auto w-full">
-      {/* ── Header ── */}
+      {/* ── Dot progress row ── */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium" style={{ color: "#9CA3AF" }}>
-            Question {idx + 1} of {total}
-          </span>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {results.map((r, i) => (
+            <div
+              key={i}
+              className="rounded-full"
+              style={{
+                height: 8,
+                width: i === idx ? 28 : 8,
+                transition: "width 0.3s ease, background-color 0.3s ease",
+                backgroundColor:
+                  r === "correct" ? "#27C07B" :
+                  r === "wrong"   ? "#F05252" :
+                  i === idx       ? "#489BFC" :
+                  "#30363B",
+              }}
+            />
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
           {streak >= 2 && (
             <div
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
-              style={{ backgroundColor: "#F7B03520", color: "#F7B035" }}
+              className="pop-in flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
+              style={{ backgroundColor: "#F7B03520", color: "#F7B035", border: "1px solid #F7B03540" }}
             >
               <Flame size={12} />
-              {streak} streak!
+              {streak}x streak!
             </div>
           )}
+          <div
+            className="flex items-center gap-1.5 text-sm font-semibold"
+            style={{ color: "#27C07B" }}
+          >
+            <CheckCircle2 size={14} />
+            {score}/{total}
+          </div>
         </div>
-        <div
-          className="flex items-center gap-1.5 text-sm font-semibold"
-          style={{ color: "#27C07B" }}
-        >
-          <CheckCircle2 size={14} />
-          {score} correct
-        </div>
-      </div>
-
-      {/* ── Progress bar ── */}
-      <div
-        className="h-2 rounded-full overflow-hidden"
-        style={{ backgroundColor: "#30363B" }}
-      >
-        <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${progress}%`, backgroundColor: "#489BFC" }}
-        />
       </div>
 
       {/* ── Question card ── */}
@@ -348,6 +370,7 @@ export default function GenericQuiz({
                 key={`${choice}-${i}`}
                 label={choice}
                 state={state}
+                choiceIdx={i}
                 onClick={() => submit(i)}
                 disabled={phase === "feedback"}
               />

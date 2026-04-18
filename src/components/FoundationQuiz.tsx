@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   CheckCircle2,
   XCircle,
@@ -13,7 +12,6 @@ import {
   Zap,
 } from "lucide-react";
 import { useProgress } from "@/context/ProgressContext";
-import { useEffect, useRef } from "react";
 import FractionGrid from "@/components/quiz/FractionGrid";
 import {
   generateQuiz,
