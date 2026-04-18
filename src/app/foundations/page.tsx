@@ -22,7 +22,7 @@ export default function FoundationsPage() {
       {phase === "lesson" ? (
         <FoundationsLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <FoundationQuiz onHome={() => router.push("/")} />
+        <FoundationQuiz onHome={() => router.push("/")} courseId="foundations" courseXP={500} />
       )}
     </AppShell>
   );

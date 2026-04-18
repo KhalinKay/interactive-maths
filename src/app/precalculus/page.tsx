@@ -23,7 +23,7 @@ export default function PreCalculusPage() {
       {phase === "lesson" ? (
         <PreCalcLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generatePreCalcQuiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generatePreCalcQuiz} courseId="precalculus" courseXP={600} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );

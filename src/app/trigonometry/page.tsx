@@ -23,7 +23,7 @@ export default function TrigonometryPage() {
       {phase === "lesson" ? (
         <TrigLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generateTrigQuiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generateTrigQuiz} courseId="trigonometry" courseXP={500} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );

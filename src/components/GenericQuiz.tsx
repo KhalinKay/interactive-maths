@@ -11,8 +11,10 @@ import {
   Star,
   Trophy,
   XCircle,
+  Zap,
 } from "lucide-react";
 import { GenericQuestion } from "@/lib/subjectQuestions";
+import { useProgress } from "@/context/ProgressContext";
 
 // ── Shared answer button ───────────────────────────────────────────────────────
 
@@ -57,20 +59,35 @@ function ScoreScreen({
   score,
   total,
   subject,
+  courseId,
+  courseXP,
   onRetry,
   onHome,
 }: {
   score: number;
   total: number;
   subject: string;
+  courseId?: string;
+  courseXP: number;
   onRetry: () => void;
   onHome: () => void;
 }) {
+  const { addCourseResult } = useProgress();
+  const [xpEarned, setXpEarned] = useState(0);
+  const savedRef = useRef(false);
+
+  useEffect(() => {
+    if (!savedRef.current) {
+      savedRef.current = true;
+      const delta = addCourseResult(courseId ?? "unknown", score, total, courseXP);
+      setXpEarned(delta);
+    }
+  }, [addCourseResult, courseId, courseXP, score, total]);
+
   const stars = score >= total ? 3 : score >= Math.ceil(total * 0.7) ? 2 : score >= Math.ceil(total * 0.5) ? 1 : 0;
-  const xp = score * 50;
 
   return (
-    <div className="flex flex-col items-center gap-8 py-10 max-w-md mx-auto">
+    <div className="flex flex-col items-center gap-7 py-10 max-w-md mx-auto">
       <div
         className="w-20 h-20 rounded-2xl flex items-center justify-center"
         style={{ backgroundColor: "#27C07B18", border: "2px solid #27C07B40" }}
@@ -79,13 +96,9 @@ function ScoreScreen({
       </div>
 
       <div className="text-center">
-        <h2 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>
-          Quiz Complete!
-        </h2>
-        <p className="mt-1" style={{ color: "#9CA3AF" }}>
-          {subject}
-        </p>
-        <p className="mt-3 text-base" style={{ color: "#9CA3AF" }}>
+        <h2 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>Quiz Complete!</h2>
+        <p className="mt-1 text-sm" style={{ color: "#9CA3AF" }}>{subject}</p>
+        <p className="mt-3 text-sm" style={{ color: "#9CA3AF" }}>
           {score === total
             ? "Perfect score — outstanding!"
             : score >= Math.ceil(total * 0.7)
@@ -94,58 +107,57 @@ function ScoreScreen({
         </p>
       </div>
 
+      {/* Stars */}
       <div className="flex gap-3">
         {[1, 2, 3].map((s) => (
           <Star
             key={s}
-            size={40}
+            size={36}
             fill={s <= stars ? "#F7B035" : "transparent"}
             style={{ color: s <= stars ? "#F7B035" : "#30363B" }}
           />
         ))}
       </div>
 
+      {/* Score */}
       <div
-        className="px-10 py-6 rounded-2xl flex flex-col items-center gap-1"
+        className="px-10 py-6 rounded-2xl flex flex-col items-center gap-1 w-full"
         style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}
       >
         <span className="text-5xl font-black" style={{ color: "#E8ECF0" }}>
           {score}
-          <span className="text-2xl font-normal" style={{ color: "#9CA3AF" }}>
-            /{total}
-          </span>
+          <span className="text-2xl font-normal" style={{ color: "#9CA3AF" }}>/{total}</span>
         </span>
-        <span className="text-sm" style={{ color: "#9CA3AF" }}>
-          correct answers
-        </span>
+        <span className="text-sm" style={{ color: "#9CA3AF" }}>correct answers</span>
       </div>
 
+      {/* XP earned */}
       <div
-        className="flex items-center gap-2 px-6 py-3 rounded-xl"
-        style={{ backgroundColor: "#F7B03518", border: "1px solid #F7B03540" }}
+        className="flex items-center gap-2 px-6 py-3 rounded-xl w-full justify-center"
+        style={{ backgroundColor: "#F7B03514", border: "1px solid #F7B03530" }}
       >
-        <Star size={18} fill="#F7B035" style={{ color: "#F7B035" }} />
-        <span className="font-semibold" style={{ color: "#F7B035" }}>
-          +{xp} XP earned
+        <Zap size={16} fill="#F7B035" style={{ color: "#F7B035" }} />
+        <span className="font-bold text-sm" style={{ color: "#F7B035" }}>
+          {xpEarned > 0 ? `+${xpEarned} XP earned!` : "No new XP — try for a better score!"}
         </span>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-3 w-full">
         <button
           onClick={onRetry}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
+          className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
           style={{ backgroundColor: "#262C30", border: "1px solid #30363B", color: "#E8ECF0" }}
         >
-          <RotateCcw size={16} />
+          <RotateCcw size={15} />
           Try Again
         </button>
         <button
           onClick={onHome}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
+          className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
           style={{ backgroundColor: "#489BFC", color: "white" }}
         >
           All Courses
-          <ArrowRight size={16} />
+          <ArrowRight size={15} />
         </button>
       </div>
     </div>
@@ -157,11 +169,14 @@ function ScoreScreen({
 export default function GenericQuiz({
   generate,
   total = 8,
+  courseId,
+  courseXP = 400,
   onHome,
 }: {
-  /** Called fresh each quiz session; should return `total` questions */
   generate: (n: number) => GenericQuestion[];
   total?: number;
+  courseId?: string;
+  courseXP?: number;
   onHome: () => void;
 }) {
   const [questions, setQuestions] = useState<GenericQuestion[]>(() => generate(total));
@@ -226,6 +241,8 @@ export default function GenericQuiz({
         score={score}
         total={total}
         subject={q?.subject ?? ""}
+        courseId={courseId}
+        courseXP={courseXP}
         onRetry={retry}
         onHome={onHome}
       />

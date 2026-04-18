@@ -24,7 +24,7 @@ export default function RatiosPage() {
       {phase === "lesson" ? (
         <RatiosLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generateRatiosQuiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generateRatiosQuiz} courseId="ratios" courseXP={400} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );

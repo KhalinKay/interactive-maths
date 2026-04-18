@@ -23,7 +23,7 @@ export default function PreAlgebraPage() {
       {phase === "lesson" ? (
         <PreAlgebraLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generatePreAlgebraQuiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generatePreAlgebraQuiz} courseId="prealgebra" courseXP={350} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );

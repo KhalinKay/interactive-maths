@@ -23,7 +23,7 @@ export default function GeometryBasicsPage() {
       {phase === "lesson" ? (
         <GeometryLesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generateGeometryQuiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generateGeometryQuiz} courseId="geometry" courseXP={450} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );

@@ -23,7 +23,7 @@ export default function Algebra2Page() {
       {phase === "lesson" ? (
         <Algebra2Lesson onQuiz={() => setPhase("quiz")} />
       ) : (
-        <GenericQuiz generate={generateAlgebra2Quiz} onHome={() => router.push("/")} />
+        <GenericQuiz generate={generateAlgebra2Quiz} courseId="algebra2" courseXP={550} onHome={() => router.push("/")} />
       )}
     </AppShell>
   );
