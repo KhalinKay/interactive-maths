@@ -15,14 +15,14 @@ function AngleTypes() {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
       {types.map((t) => (
         <div key={t.label} className="flex flex-col items-center gap-2 p-3 rounded-xl"
-          style={{ backgroundColor: "#1E2225", border: `1px solid ${t.color}30` }}>
+          style={{ backgroundColor: "#FFFFFF", border: `1px solid ${t.color}40` }}>
           <svg viewBox="0 0 110 90" className="w-20 h-16">
             <line x1={cx} y1={cy} x2={cx + 50} y2={cy} stroke={t.color} strokeWidth="2.5" strokeLinecap="round" />
             <line x1={cx} y1={cy} x2={cx + t.end[0]} y2={cy + t.end[1]} stroke={t.color} strokeWidth="2.5" strokeLinecap="round" />
             {t.label === "Right" && <rect x={cx} y={cy - 12} width="12" height="12" fill="none" stroke={t.color} strokeWidth="1.5" />}
           </svg>
           <span className="text-xs font-bold" style={{ color: t.color }}>{t.label}</span>
-          <span className="text-xs" style={{ color: "#9CA3AF" }}>{t.sub}</span>
+          <span className="text-xs" style={{ color: "#7D7168" }}>{t.sub}</span>
         </div>
       ))}
     </div>
@@ -36,7 +36,7 @@ function TriangleAngles() {
       <text x="120" y="40" textAnchor="middle" fontSize="13" fontWeight="700" fill="#489BFC">60°</text>
       <text x="35" y="140" textAnchor="middle" fontSize="13" fontWeight="700" fill="#27C07B">70°</text>
       <text x="205" y="140" textAnchor="middle" fontSize="13" fontWeight="700" fill="#F7B035">50°</text>
-      <text x="120" y="130" textAnchor="middle" fontSize="11" fill="#9CA3AF">60 + 70 + 50 = 180°</text>
+      <text x="120" y="130" textAnchor="middle" fontSize="11" fill="#7D7168">60 + 70 + 50 = 180°</text>
     </svg>
   );
 }
@@ -45,33 +45,33 @@ function AreaShapes() {
   return (
     <div className="grid grid-cols-3 gap-3 w-full">
       {/* Rectangle */}
-      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}>
+      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8" }}>
         <svg viewBox="0 0 80 60" className="w-16 h-12">
           <rect x="5" y="10" width="70" height="40" fill="#489BFC18" stroke="#489BFC" strokeWidth="2" />
-          <text x="40" y="32" textAnchor="middle" fontSize="9" fill="#9CA3AF">l × w</text>
+          <text x="40" y="32" textAnchor="middle" fontSize="9" fill="#7D7168">l × w</text>
         </svg>
         <span className="text-xs font-semibold" style={{ color: "#489BFC" }}>Rectangle</span>
-        <span className="text-xs font-mono" style={{ color: "#E8ECF0" }}>A = l × w</span>
+        <span className="text-xs font-mono" style={{ color: "#1A1512" }}>A = l × w</span>
       </div>
       {/* Triangle */}
-      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}>
+      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8" }}>
         <svg viewBox="0 0 80 60" className="w-16 h-12">
           <polygon points="40,8 5,52 75,52" fill="#27C07B18" stroke="#27C07B" strokeWidth="2" />
           <line x1="40" y1="8" x2="40" y2="52" stroke="#27C07B" strokeWidth="1" strokeDasharray="3,2" />
-          <text x="40" y="38" textAnchor="middle" fontSize="8" fill="#9CA3AF">h</text>
+          <text x="40" y="38" textAnchor="middle" fontSize="8" fill="#7D7168">h</text>
         </svg>
         <span className="text-xs font-semibold" style={{ color: "#27C07B" }}>Triangle</span>
-        <span className="text-xs font-mono" style={{ color: "#E8ECF0" }}>A = ½bh</span>
+        <span className="text-xs font-mono" style={{ color: "#1A1512" }}>A = ½bh</span>
       </div>
       {/* Circle */}
-      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}>
+      <div className="flex flex-col items-center gap-1 p-3 rounded-xl" style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8" }}>
         <svg viewBox="0 0 80 60" className="w-16 h-12">
           <circle cx="40" cy="30" r="22" fill="#F7B03518" stroke="#F7B035" strokeWidth="2" />
           <line x1="40" y1="30" x2="62" y2="30" stroke="#F7B035" strokeWidth="1.5" strokeDasharray="3,2" />
           <text x="52" y="26" fontSize="9" fill="#F7B035">r</text>
         </svg>
         <span className="text-xs font-semibold" style={{ color: "#F7B035" }}>Circle</span>
-        <span className="text-xs font-mono" style={{ color: "#E8ECF0" }}>A = πr²</span>
+        <span className="text-xs font-mono" style={{ color: "#1A1512" }}>A = πr²</span>
       </div>
     </div>
   );
@@ -83,14 +83,14 @@ function PythagorasVis() {
       {/* Triangle */}
       <polygon points="40,160 160,160 160,40" fill="#489BFC0A" stroke="#489BFC" strokeWidth="2" />
       {/* Right angle marker */}
-      <rect x="148" y="148" width="12" height="12" fill="none" stroke="#9CA3AF" strokeWidth="1.5" />
+      <rect x="148" y="148" width="12" height="12" fill="none" stroke="#7D7168" strokeWidth="1.5" />
       {/* Side labels */}
       <text x="100" y="178" textAnchor="middle" fontSize="13" fontWeight="700" fill="#27C07B">b</text>
       <text x="172" y="105" textAnchor="middle" fontSize="13" fontWeight="700" fill="#F7B035">a</text>
       <text x="88" y="92" textAnchor="middle" fontSize="13" fontWeight="700" fill="#489BFC">c</text>
-      <text x="88" y="112" textAnchor="middle" fontSize="10" fill="#9CA3AF">(hyp)</text>
+      <text x="88" y="112" textAnchor="middle" fontSize="10" fill="#7D7168">(hyp)</text>
       {/* Formula */}
-      <text x="220" y="160" textAnchor="middle" fontSize="12" fontWeight="700" fill="#E8ECF0">a²+b²=c²</text>
+      <text x="220" y="160" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1A1512">a²+b²=c²</text>
     </svg>
   );
 }

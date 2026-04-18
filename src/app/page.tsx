@@ -52,9 +52,9 @@ function CourseCard({
     <div
       className="rounded-2xl flex flex-col overflow-hidden transition-all duration-200 hover:translate-y-[-2px] hover:shadow-lg"
       style={{
-        backgroundColor: "#1E2225",
-        border: `1px solid ${done ? color + "50" : "#30363B"}`,
-        boxShadow: done ? `0 0 0 1px ${color}20` : undefined,
+        backgroundColor: "#FFFFFF",
+        border: `1px solid ${done ? color + "50" : "#E2D5C8"}`,
+        boxShadow: done ? `0 0 0 1px ${color}20` : "0 1px 6px rgba(0,0,0,0.06)",
       }}
     >
       <div className="h-1 w-full" style={{ background: done ? `linear-gradient(90deg, ${color}, ${color}99)` : color }} />
@@ -71,7 +71,7 @@ function CourseCard({
               <CheckCircle2 size={16} style={{ color: "#27C07B" }} />
               <div className="flex gap-0.5">
                 {[1, 2, 3].map((s) => (
-                  <Star key={s} size={10} fill={s <= stars ? "#F7B035" : "transparent"} style={{ color: s <= stars ? "#F7B035" : "#30363B" }} />
+                  <Star key={s} size={10} fill={s <= stars ? "#F7B035" : "transparent"} style={{ color: s <= stars ? "#F7B035" : "#C8BDB5" }} />
                 ))}
               </div>
             </div>
@@ -92,21 +92,21 @@ function CourseCard({
               </span>
             )}
           </div>
-          <h3 className="text-sm font-bold leading-snug" style={{ color: "#E8ECF0" }}>{title}</h3>
-          <p className="mt-1 text-xs leading-relaxed" style={{ color: "#9CA3AF" }}>{description}</p>
+          <h3 className="text-sm font-bold leading-snug" style={{ color: "#1A1512" }}>{title}</h3>
+          <p className="mt-1 text-xs leading-relaxed" style={{ color: "#7D7168" }}>{description}</p>
         </div>
 
-        <div className="mt-auto flex items-center justify-between pt-3" style={{ borderTop: "1px solid #30363B" }}>
-          <div className="flex items-center gap-3 text-xs" style={{ color: "#9CA3AF" }}>
-            <span>{questions} questions</span>
-            <span className="flex items-center gap-0.5" style={{ color: "#F7B035" }}>
+          <div className="mt-auto flex items-center justify-between pt-3" style={{ borderTop: "1px solid #E2D5C8" }}>
+          <div className="flex items-center gap-3 text-xs" style={{ color: "#7D7168" }}>
+            <span style={{ color: "#7D7168" }}>{questions} questions</span>
+            <span className="flex items-center gap-0.5" style={{ color: "#D97706" }}>
               <Zap size={10} fill="#F7B035" />+{xp} XP
             </span>
           </div>
           <Link
             href={href}
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all active:scale-95 hover:brightness-110"
-            style={{ backgroundColor: done ? "#262C30" : color, color: done ? "#E8ECF0" : "white", border: done ? `1px solid #30363B` : undefined }}
+            style={{ backgroundColor: done ? "#F5EEE6" : color, color: done ? "#3A3028" : "white", border: done ? `1px solid #E2D5C8` : undefined }}
           >
             {done ? "Retry" : "Begin"} <ArrowRight size={12} />
           </Link>
@@ -126,27 +126,27 @@ function StatsBar() {
   return (
     <div
       className="rounded-2xl p-5 mb-10 grid grid-cols-2 sm:grid-cols-4 gap-4"
-      style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}
+      style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8", boxShadow: "0 1px 6px rgba(0,0,0,0.05)" }}
     >
       <div className="flex flex-col gap-1">
-        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#9CA3AF" }}>Total XP</span>
+        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#7D7168" }}>Total XP</span>
         <span className="text-2xl font-black flex items-center gap-1" style={{ color: "#F7B035" }}>
           <Zap size={18} fill="#F7B035" />{totalXP.toLocaleString()}
         </span>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#9CA3AF" }}>Level</span>
+        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#7D7168" }}>Level</span>
         <span className="text-2xl font-black" style={{ color: "#489BFC" }}>{level}</span>
-        <div className="h-1.5 rounded-full overflow-hidden mt-1" style={{ backgroundColor: "#30363B" }}>
+          <div className="h-1.5 rounded-full overflow-hidden mt-1" style={{ backgroundColor: "#E2D5C8" }}>
           <div className="h-full rounded-full" style={{ width: `${progressPct}%`, background: "linear-gradient(90deg, #489BFC, #7C3AED)" }} />
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#9CA3AF" }}>Completed</span>
-        <span className="text-2xl font-black" style={{ color: "#27C07B" }}>{completedCount}<span className="text-sm font-normal" style={{ color: "#9CA3AF" }}>/{total}</span></span>
+        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#7D7168" }}>Completed</span>
+        <span className="text-2xl font-black" style={{ color: "#27C07B" }}>{completedCount}<span className="text-sm font-normal" style={{ color: "#7D7168" }}>/{total}</span></span>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#9CA3AF" }}>Quiz Streak</span>
+        <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#7D7168" }}>Quiz Streak</span>
         <span className="text-2xl font-black" style={{ color: "#FB923C" }}>🔥 {quizStreak}</span>
       </div>
     </div>
@@ -161,8 +161,8 @@ export default function HomePage() {
       <div className="max-w-5xl mx-auto">
         {/* Hero */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>Your Learning Path</h1>
-          <p className="mt-2 text-base" style={{ color: "#9CA3AF" }}>
+          <h1 className="text-3xl font-bold" style={{ color: "#1A1512" }}>Your Learning Path</h1>
+          <p className="mt-2 text-base" style={{ color: "#7D7168" }}>
             Work through the curriculum in order. Each section builds on the last.
           </p>
         </div>
@@ -182,10 +182,10 @@ export default function HomePage() {
                   {si + 1}
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold" style={{ color: "#E8ECF0" }}>{section.label}</h2>
-                  <p className="text-sm" style={{ color: "#9CA3AF" }}>{section.description}</p>
+                  <h2 className="text-lg font-bold" style={{ color: "#1A1512" }}>{section.label}</h2>
+                  <p className="text-sm" style={{ color: "#7D7168" }}>{section.description}</p>
                 </div>
-                <div className="flex-1 h-px ml-2" style={{ backgroundColor: "#30363B" }} />
+                <div className="flex-1 h-px ml-2" style={{ backgroundColor: "#E2D5C8" }} />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">

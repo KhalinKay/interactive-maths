@@ -35,7 +35,7 @@ function SOHCAHTOACard() {
           style={{ backgroundColor: `${r.color}14`, border: `1px solid ${r.color}30` }}>
           <span className="w-8 text-center font-black text-sm rounded-lg py-0.5" style={{ backgroundColor: r.color, color: "white" }}>{r.mnemonic[0]}</span>
           <span className="font-mono font-bold text-base flex-1" style={{ color: r.color }}>{r.name} =</span>
-          <span className="font-mono text-sm font-semibold" style={{ color: "#E8ECF0" }}>{r.formula}</span>
+          <span className="font-mono text-sm font-semibold" style={{ color: "#1A1512" }}>{r.formula}</span>
           <span className="text-xs font-black px-2 py-0.5 rounded-full" style={{ backgroundColor: `${r.color}20`, color: r.color }}>{r.mnemonic}</span>
         </div>
       ))}
@@ -55,15 +55,15 @@ function ExactValueTable() {
     <div className="overflow-x-auto w-full">
       <table className="w-full text-sm font-mono rounded-xl overflow-hidden" style={{ borderCollapse: "collapse" }}>
         <thead>
-          <tr style={{ backgroundColor: "#262C30" }}>
+          <tr style={{ backgroundColor: "#F5EEE6" }}>
             {["Angle", "sin", "cos", "tan"].map(h => (
-              <th key={h} className="px-3 py-2 text-center text-xs font-bold uppercase tracking-wider" style={{ color: "#9CA3AF", border: "1px solid #30363B" }}>{h}</th>
+              <th key={h} className="px-3 py-2 text-center text-xs font-bold uppercase tracking-wider" style={{ color: "#7D7168", border: "1px solid #E2D5C8" }}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {vals.map((row, i) => (
-            <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#1E2225" : "#262C30" }}>
+            <tr key={i} style={{ backgroundColor: i % 2 === 0 ? "#FFFFFF" : "#FAF8F4" }}>
               <td className="px-3 py-2 text-center font-bold" style={{ color: "#F7B035", border: "1px solid #30363B" }}>{row.angle}</td>
               <td className="px-3 py-2 text-center" style={{ color: "#F05252", border: "1px solid #30363B" }}>{row.sin}</td>
               <td className="px-3 py-2 text-center" style={{ color: "#27C07B", border: "1px solid #30363B" }}>{row.cos}</td>
@@ -206,7 +206,6 @@ On a calculator, these are labelled sin⁻¹, cos⁻¹, tan⁻¹  (or  arcsin, a
         <ExactValueTable />
       </div>
     ),
-    hint: "For sin: values go 0, 1/2, √2/2, √3/2, 1 as the angle increases. cos is the reverse. tan = sin/cos.",
   },
   {
     type: "check",

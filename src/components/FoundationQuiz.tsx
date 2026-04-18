@@ -41,7 +41,7 @@ function AnswerBtn({
   large?: boolean;
 }) {
   const palette: Record<BtnState, { bg: string; border: string; color: string }> = {
-    idle: { bg: "#262C30", border: "#30363B", color: "#E8ECF0" },
+    idle: { bg: "#F5EEE6", border: "#E2D5C8", color: "#1A1512" },
     selected: { bg: "#489BFC18", border: "#489BFC", color: "#489BFC" },
     correct: { bg: "#27C07B18", border: "#27C07B", color: "#27C07B" },
     wrong: { bg: "#F0525218", border: "#F05252", color: "#F05252" },
@@ -86,14 +86,14 @@ function FractionBar({
       </span>
       <div
         className="flex-1 h-10 rounded-lg overflow-hidden"
-        style={{ backgroundColor: "#262C30", border: "1px solid #30363B" }}
+        style={{ backgroundColor: "#F5EEE6", border: "1px solid #E2D5C8" }}
       >
         <div
           className="h-full rounded-lg"
           style={{ width: `${pct}%`, backgroundColor: color }}
         />
       </div>
-      <span className="w-10 font-mono text-xs" style={{ color: "#9CA3AF" }}>
+      <span className="w-10 font-mono text-xs" style={{ color: "#7D7168" }}>
         {pct.toFixed(0)}%
       </span>
     </div>
@@ -174,9 +174,9 @@ function ShadeRender({
         <div
           className="px-4 py-2 rounded-lg font-mono text-base"
           style={{
-            backgroundColor: "#1E2225",
-            border: "1px solid #30363B",
-            color: isCorrectCount ? "#27C07B" : "#9CA3AF",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E2D5C8",
+            color: isCorrectCount ? "#27C07B" : "#7D7168",
           }}
         >
           Shaded:{" "}
@@ -278,9 +278,9 @@ function ArithmeticRender({
       <div
         className="px-10 py-6 rounded-2xl font-mono text-5xl font-bold"
         style={{
-          backgroundColor: "#262C30",
-          border: "1px solid #30363B",
-          color: "#E8ECF0",
+          backgroundColor: "#F9F4EE",
+          border: "1px solid #E2D5C8",
+          color: "#1A1512",
         }}
       >
         {q.a}{" "}
@@ -341,7 +341,7 @@ function EquivalentRender({
           </span>
         </div>
 
-        <span className="text-4xl font-bold" style={{ color: "#9CA3AF" }}>
+        <span className="text-4xl font-bold" style={{ color: "#7D7168" }}>
           =
         </span>
 
@@ -357,7 +357,7 @@ function EquivalentRender({
           />
           <span
             className="font-mono text-xl font-bold"
-            style={{ color: phase === "feedback" ? "#27C07B" : "#9CA3AF" }}
+            style={{ color: phase === "feedback" ? "#27C07B" : "#7D7168" }}
           >
             {phase === "feedback" ? q.correctNum : "?"}
             /{q.targetDen}
@@ -428,8 +428,8 @@ function ScoreScreen({
       </div>
 
       <div className="text-center">
-        <h2 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>Quiz Complete!</h2>
-        <p className="mt-2 text-sm" style={{ color: "#9CA3AF" }}>
+        <h2 className="text-3xl font-bold" style={{ color: "#1A1512" }}>Quiz Complete!</h2>
+        <p className="mt-2 text-sm" style={{ color: "#7D7168" }}>
           {score === total
             ? "Perfect score — you're a natural!"
             : score >= Math.ceil(total * 0.7)
@@ -444,19 +444,19 @@ function ScoreScreen({
             key={s}
             size={36}
             fill={s <= stars ? "#F7B035" : "transparent"}
-            style={{ color: s <= stars ? "#F7B035" : "#30363B" }}
+            style={{ color: s <= stars ? "#F7B035" : "#C8BDB5" }}
           />
         ))}
       </div>
 
       <div
         className="px-10 py-6 rounded-2xl flex flex-col items-center gap-1 w-full"
-        style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}
+        style={{ backgroundColor: "#F5EEE6", border: "1px solid #E2D5C8" }}
       >
-        <span className="text-5xl font-black" style={{ color: "#E8ECF0" }}>
-          {score}<span className="text-2xl font-normal" style={{ color: "#9CA3AF" }}>/{total}</span>
+        <span className="text-5xl font-black" style={{ color: "#1A1512" }}>
+          {score}<span className="text-2xl font-normal" style={{ color: "#7D7168" }}>/{total}</span>
         </span>
-        <span className="text-sm" style={{ color: "#9CA3AF" }}>correct answers</span>
+        <span className="text-sm" style={{ color: "#7D7168" }}>correct answers</span>
       </div>
 
       <div
@@ -473,7 +473,7 @@ function ScoreScreen({
         <button
           onClick={onRetry}
           className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
-          style={{ backgroundColor: "#262C30", border: "1px solid #30363B", color: "#E8ECF0" }}
+          style={{ backgroundColor: "#F5EEE6", border: "1px solid #E2D5C8", color: "#1A1512" }}
         >
           <RotateCcw size={15} />
           Try Again
@@ -600,7 +600,7 @@ export default function FoundationQuiz({
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium" style={{ color: "#9CA3AF" }}>
+          <span className="text-sm font-medium" style={{ color: "#7D7168" }}>
             Question {idx + 1} of {TOTAL}
           </span>
           {streak >= 2 && (
@@ -622,7 +622,7 @@ export default function FoundationQuiz({
       {/* ── Progress bar ── */}
       <div
         className="h-2 rounded-full overflow-hidden"
-        style={{ backgroundColor: "#30363B" }}
+        style={{ backgroundColor: "#E2D5C8" }}
       >
         <div
           className="h-full rounded-full transition-all duration-500"
@@ -634,13 +634,13 @@ export default function FoundationQuiz({
       <div
         className="rounded-2xl overflow-hidden shadow-2xl transition-colors duration-300"
         style={{
-          backgroundColor: "#1E2225",
+          backgroundColor: "#FFFFFF",
           border: `2px solid ${
             phase === "feedback"
               ? isCorrect
                 ? "#27C07B"
                 : "#F05252"
-              : "#30363B"
+              : "#E2D5C8"
           }`,
         }}
       >
@@ -648,7 +648,7 @@ export default function FoundationQuiz({
         <div className="px-6 pt-6 pb-4">
           <p
             className="text-xl font-semibold leading-snug"
-            style={{ color: "#E8ECF0" }}
+            style={{ color: "#1A1512" }}
           >
             {q.prompt}
           </p>
@@ -729,7 +729,7 @@ export default function FoundationQuiz({
                 >
                   {isCorrect ? "Correct!" : "Not quite — here's why:"}
                 </p>
-                <p className="mt-1 text-sm leading-relaxed" style={{ color: "#9CA3AF" }}>
+                <p className="mt-1 text-sm leading-relaxed" style={{ color: "#3A3028" }}>
                   {q.explanation}
                 </p>
               </div>

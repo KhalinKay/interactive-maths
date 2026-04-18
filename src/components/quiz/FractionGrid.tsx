@@ -36,9 +36,9 @@ export default function FractionGrid({
         gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
         gap: "4px",
         padding: "12px",
-        backgroundColor: "#1a1f22",
+        backgroundColor: "#F5EEE6",
         borderRadius: "12px",
-        border: "1px solid #30363B",
+        border: "1px solid #E2D5C8",
       }}
       aria-label={`Fraction grid showing ${numerator}/${denominator}`}
     >
@@ -61,12 +61,12 @@ export default function FractionGrid({
               width: cellSize,
               height: cellSize,
               backgroundColor: unknown
-                ? "#262C30"
+                ? "#EDE5DC"
                 : isShaded
                 ? color
-                : "#262C30",
+                : "#EDE5DC",
               border: `2px solid ${
-                unknown ? "#489BFC44" : isShaded ? color : "#30363B"
+                unknown ? "#489BFC44" : isShaded ? color : "#D4C8BC"
               }`,
               borderRadius: "6px",
               cursor: interactive ? "pointer" : "default",

@@ -258,13 +258,13 @@ export default function PythagorasLesson() {
                   ? "bg-[#27C07B]"
                   : i === step
                   ? "bg-[#489BFC]"
-                  : "bg-[#30363B]"
+                  : "bg-[#D4C8BC]"
               }`}
             />
             {i < STEPS.length - 1 && (
               <div
                 className={`w-2 h-2 rounded-full shrink-0 ${
-                  i < step ? "bg-[#27C07B]" : "bg-[#30363B]"
+                  i < step ? "bg-[#27C07B]" : "bg-[#D4C8BC]"
                 }`}
               />
             )}
@@ -273,41 +273,41 @@ export default function PythagorasLesson() {
       </div>
 
       {/* ── Lesson card ── */}
-      <div className="bg-[#1E2225] border border-[#30363B] rounded-2xl overflow-hidden shadow-2xl">
+      <div className="bg-white border border-[#E2D5C8] rounded-2xl overflow-hidden" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.07)" }}>
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#30363B] flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#E2D5C8] flex items-center justify-between">
           <div>
-            <p className="text-[#9CA3AF] text-xs font-medium uppercase tracking-widest mb-1">
+            <p className="text-[#7D7168] text-xs font-medium uppercase tracking-widest mb-1">
               Step {step + 1} of {STEPS.length}
             </p>
-            <h2 className="text-[#E8ECF0] text-xl font-bold">{currentStep.title}</h2>
+            <h2 className="text-[#1A1512] text-xl font-bold">{currentStep.title}</h2>
           </div>
-          <div className="flex items-center gap-2 text-[#9CA3AF] text-sm font-mono bg-[#262C30] px-3 py-1.5 rounded-lg border border-[#30363B]">
+          <div className="flex items-center gap-2 text-[#7D7168] text-sm font-mono bg-[#F5EEE6] px-3 py-1.5 rounded-lg border border-[#E2D5C8]">
             <span className="text-[#F7B035]">a²</span>
-            <span className="text-[#9CA3AF]">+</span>
+            <span className="text-[#7D7168]">+</span>
             <span className="text-[#27C07B]">b²</span>
-            <span className="text-[#9CA3AF]">=</span>
+            <span className="text-[#7D7168]">=</span>
             <span className="text-[#489BFC]">c²</span>
           </div>
         </div>
 
         {/* Mafs canvas */}
-        <div className="bg-[#1a1f22] px-2 py-2">
+        <div className="bg-[#F5EEE6] px-2 py-2">
           <PythagorasScene onUpdate={handleUpdate} />
         </div>
 
         {/* Live equation strip */}
-        <div className="px-6 py-3 bg-[#262C30] border-y border-[#30363B] flex items-center justify-center gap-4 font-mono text-lg">
+        <div className="px-6 py-3 bg-[#F9F4EE] border-y border-[#E2D5C8] flex items-center justify-center gap-4 font-mono text-lg">
           <span>
             <span className="text-[#F7B035] font-bold">{(a * a).toFixed(1)}</span>
-            <span className="text-[#9CA3AF] text-sm ml-1">({fmt1(a)}²)</span>
+            <span className="text-[#7D7168] text-sm ml-1">({fmt1(a)}²)</span>
           </span>
-          <span className="text-[#9CA3AF]">+</span>
+          <span className="text-[#7D7168]">+</span>
           <span>
             <span className="text-[#27C07B] font-bold">{(b * b).toFixed(1)}</span>
-            <span className="text-[#9CA3AF] text-sm ml-1">({fmt1(b)}²)</span>
+            <span className="text-[#7D7168] text-sm ml-1">({fmt1(b)}²)</span>
           </span>
-          <span className="text-[#9CA3AF]">=</span>
+          <span className="text-[#7D7168]">=</span>
           <span>
             <span
               className={`font-bold transition-colors duration-300 ${
@@ -316,13 +316,13 @@ export default function PythagorasLesson() {
             >
               {(c * c).toFixed(1)}
             </span>
-            <span className="text-[#9CA3AF] text-sm ml-1">({c.toFixed(2)}²)</span>
+            <span className="text-[#7D7168] text-sm ml-1">({c.toFixed(2)}²)</span>
           </span>
         </div>
 
         {/* Narration / goal area */}
         <div className="px-6 py-5 flex flex-col gap-4">
-          <p className="text-[#9CA3AF] text-base leading-relaxed">{currentStep.body}</p>
+          <p className="text-[#3A3028] text-base leading-relaxed">{currentStep.body}</p>
 
           {/* Hint */}
           {currentStep.goal !== null && (
@@ -335,7 +335,7 @@ export default function PythagorasLesson() {
                 {showHint ? "Hide hint" : "Show hint"}
               </button>
               {showHint && (
-                <div className="mt-2 p-3 bg-[#262C30] border border-[#F7B035]/30 rounded-xl text-[#F7B035] text-sm">
+                <div className="mt-2 p-3 bg-[#FEF3C7] border border-[#F7B035]/30 rounded-xl text-[#92400E] text-sm">
                   Drag the point until it snaps to <strong>x&nbsp;=&nbsp;3</strong> (right) and <strong>y&nbsp;=&nbsp;4</strong> (up). You'll feel it click into place!
                 </div>
               )}
@@ -350,7 +350,7 @@ export default function PythagorasLesson() {
                 <p className="text-[#27C07B] font-semibold">
                   {isLastStep ? "Lesson complete! 🏆" : "Correct!"}
                 </p>
-                <p className="text-[#9CA3AF] text-sm">
+                <p className="text-[#7D7168] text-sm">
                   {fmt1(a)}² + {fmt1(b)}² = {(a * a + b * b).toFixed(0)} = {c.toFixed(0)}²
                 </p>
               </div>
@@ -362,7 +362,7 @@ export default function PythagorasLesson() {
             <button
               disabled={step === 0}
               onClick={() => { setStep((s) => s - 1); setShowHint(false); }}
-              className="flex items-center gap-2 text-[#9CA3AF] text-sm disabled:opacity-30 hover:text-[#E8ECF0] transition-colors"
+              className="flex items-center gap-2 text-[#7D7168] text-sm disabled:opacity-30 hover:text-[#1A1512] transition-colors"
             >
               <RotateCcw size={14} />
               Back
@@ -383,7 +383,7 @@ export default function PythagorasLesson() {
             ) : (
               <button
                 disabled
-                className="px-6 py-2.5 bg-[#30363B] text-[#9CA3AF] font-semibold rounded-xl cursor-not-allowed opacity-60"
+                className="px-6 py-2.5 bg-[#E2D5C8] text-[#7D7168] font-semibold rounded-xl cursor-not-allowed opacity-60"
               >
                 Reach the goal →
               </button>
@@ -401,13 +401,13 @@ export default function PythagorasLesson() {
         ].map((item) => (
           <div
             key={item.label}
-            className="bg-[#1E2225] border border-[#30363B] rounded-xl p-4 flex flex-col gap-1"
+            className="bg-[#FFFFFF] border border-[#E2D5C8] rounded-xl p-4 flex flex-col gap-1"
           >
-            <span className="text-[#9CA3AF] text-xs uppercase tracking-wider">{item.label}</span>
+            <span className="text-[#7D7168] text-xs uppercase tracking-wider">{item.label}</span>
             <span className="font-mono text-2xl font-bold" style={{ color: item.color }}>
               {item.value}
             </span>
-            <span className="text-[#9CA3AF] text-xs font-mono">Area of square: {item.area}</span>
+            <span className="text-[#7D7168] text-xs font-mono">Area of square: {item.area}</span>
           </div>
         ))}
       </div>

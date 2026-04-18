@@ -7,22 +7,22 @@ function BalanceScale({ left, right }: { left: string; right: string }) {
   return (
     <svg viewBox="0 0 300 160" className="w-full max-w-xs">
       {/* Fulcrum */}
-      <polygon points="150,148 167,120 133,120" fill="#9CA3AF" />
+      <polygon points="150,148 167,120 133,120" fill="#7D7168" />
       {/* Stand */}
-      <line x1="150" y1="148" x2="150" y2="160" stroke="#9CA3AF" strokeWidth="4" />
+      <line x1="150" y1="148" x2="150" y2="160" stroke="#7D7168" strokeWidth="4" />
       {/* Beam */}
-      <line x1="50" y1="90" x2="250" y2="90" stroke="#9CA3AF" strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="90" x2="250" y2="90" stroke="#7D7168" strokeWidth="4" strokeLinecap="round" />
       {/* Hanging rods */}
-      <line x1="80" y1="90" x2="80" y2="108" stroke="#9CA3AF" strokeWidth="1.5" />
-      <line x1="220" y1="90" x2="220" y2="108" stroke="#9CA3AF" strokeWidth="1.5" />
+      <line x1="80" y1="90" x2="80" y2="108" stroke="#7D7168" strokeWidth="1.5" />
+      <line x1="220" y1="90" x2="220" y2="108" stroke="#7D7168" strokeWidth="1.5" />
       {/* Left pan */}
-      <rect x="38" y="108" width="84" height="34" rx="6" fill="#262C30" stroke="#489BFC" strokeWidth="1.5" />
+      <rect x="38" y="108" width="84" height="34" rx="6" fill="#EBF5FF" stroke="#489BFC" strokeWidth="1.5" />
       <text x="80" y="128" textAnchor="middle" dominantBaseline="middle" fontSize="14" fontWeight="700" fill="#489BFC">{left}</text>
       {/* Right pan */}
-      <rect x="178" y="108" width="84" height="34" rx="6" fill="#262C30" stroke="#27C07B" strokeWidth="1.5" />
+      <rect x="178" y="108" width="84" height="34" rx="6" fill="#F0FDF8" stroke="#27C07B" strokeWidth="1.5" />
       <text x="220" y="128" textAnchor="middle" dominantBaseline="middle" fontSize="14" fontWeight="700" fill="#27C07B">{right}</text>
       {/* Equals */}
-      <text x="150" y="70" textAnchor="middle" fontSize="18" fontWeight="800" fill="#9CA3AF">=</text>
+      <text x="150" y="70" textAnchor="middle" fontSize="18" fontWeight="800" fill="#7D7168">=</text>
     </svg>
   );
 }
@@ -39,15 +39,15 @@ function LineGraph({ m, c, label }: { m: number; c: number; label: string }) {
       {/* Grid */}
       {ticks.map(n => (
         <g key={n}>
-          <line x1={sx(n)} y1={0} x2={sx(n)} y2={H} stroke="#262C30" strokeWidth="1" />
-          <line x1={0} y1={sy(n)} x2={W} y2={sy(n)} stroke="#262C30" strokeWidth="1" />
+          <line x1={sx(n)} y1={0} x2={sx(n)} y2={H} stroke="#E2D5C8" strokeWidth="1" />
+          <line x1={0} y1={sy(n)} x2={W} y2={sy(n)} stroke="#E2D5C8" strokeWidth="1" />
         </g>
       ))}
       {/* Axes */}
-      <line x1={0} y1={oy} x2={W} y2={oy} stroke="#9CA3AF" strokeWidth="1.5" />
-      <line x1={ox} y1={0} x2={ox} y2={H} stroke="#9CA3AF" strokeWidth="1.5" />
-      <text x={W - 6} y={oy - 8} fontSize="12" fill="#9CA3AF">x</text>
-      <text x={ox + 6} y={14} fontSize="12" fill="#9CA3AF">y</text>
+      <line x1={0} y1={oy} x2={W} y2={oy} stroke="#7D7168" strokeWidth="1.5" />
+      <line x1={ox} y1={0} x2={ox} y2={H} stroke="#7D7168" strokeWidth="1.5" />
+      <text x={W - 6} y={oy - 8} fontSize="12" fill="#7D7168">x</text>
+      <text x={ox + 6} y={14} fontSize="12" fill="#7D7168">y</text>
       {/* Line */}
       <line x1={cx1} y1={cy1} x2={cx2} y2={cy2} stroke="#489BFC" strokeWidth="2.5" strokeLinecap="round" />
       {/* Equation label */}

@@ -9,7 +9,7 @@ function FractionBar({ num, den, color = "#489BFC" }: { num: number; den: number
     <svg viewBox={`0 0 ${W + 2} ${H + 2}`} className="w-full max-w-sm">
       {Array.from({ length: den }).map((_, i) => (
         <rect key={i} x={i * cellW + 1} y={1} width={cellW - 2} height={H} rx={3}
-          fill={i < num ? color : "#262C30"} stroke="#30363B" strokeWidth="1" />
+          fill={i < num ? color : "#EDE5DC"} stroke="#D4C8BC" strokeWidth="1" />
       ))}
       <text x={(W + 2) / 2} y={(H + 2) / 2 + 1} textAnchor="middle" dominantBaseline="middle"
         fontSize="13" fontWeight="700" fill="white">{num}/{den}</text>
@@ -30,7 +30,7 @@ function EquivBars() {
             <text x="52" y={y + H / 2 + 1} textAnchor="end" dominantBaseline="middle" fontSize="13" fontWeight="700" fill={color}>{num}/{den}</text>
             {Array.from({ length: den }).map((_, i) => (
               <rect key={i} x={60 + i * cW} y={y} width={cW - 2} height={H} rx={3}
-                fill={i < num ? color : "#262C30"} stroke="#30363B" strokeWidth="1" />
+                fill={i < num ? color : "#EDE5DC"} stroke="#D4C8BC" strokeWidth="1" />
             ))}
           </g>
         );

@@ -37,18 +37,18 @@ function AnswerBtn({
   disabled?: boolean;
 }) {
   const accent = CHOICE_COLORS[choiceIdx] ?? "#489BFC";
-  let bg = "#1E2225";
-  let border = "#30363B";
-  let color = "#E8ECF0";
-  let lBg = accent + "22";
+  let bg = "#FFFFFF";
+  let border = "#E2D5C8";
+  let color = "#1A1512";
+  let lBg = accent + "18";
   let lColor = accent;
 
   if (state === "correct") {
-    bg = "#27C07B0D"; border = "#27C07B"; color = "#27C07B";
-    lBg = "#27C07B33"; lColor = "#27C07B";
+    bg = "#F0FDF8"; border = "#27C07B"; color = "#166B4A";
+    lBg = "#27C07B22"; lColor = "#27C07B";
   } else if (state === "wrong") {
-    bg = "#F052520D"; border = "#F05252"; color = "#F05252";
-    lBg = "#F0525233"; lColor = "#F05252";
+    bg = "#FEF2F2"; border = "#F05252"; color = "#991B1B";
+    lBg = "#F0525222"; lColor = "#F05252";
   }
 
   return (
@@ -106,15 +106,15 @@ function ScoreScreen({
     <div className="flex flex-col items-center gap-7 py-10 max-w-md mx-auto">
       <div
         className="w-20 h-20 rounded-2xl flex items-center justify-center"
-        style={{ backgroundColor: "#27C07B18", border: "2px solid #27C07B40" }}
+        style={{ backgroundColor: "#F0FDF8", border: "2px solid #27C07B40" }}
       >
         <Trophy size={40} style={{ color: "#27C07B" }} />
       </div>
 
       <div className="text-center">
-        <h2 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>Quiz Complete!</h2>
-        <p className="mt-1 text-sm" style={{ color: "#9CA3AF" }}>{subject}</p>
-        <p className="mt-3 text-sm" style={{ color: "#9CA3AF" }}>
+        <h2 className="text-3xl font-bold" style={{ color: "#1A1512" }}>Quiz Complete!</h2>
+        <p className="mt-1 text-sm" style={{ color: "#7D7168" }}>{subject}</p>
+        <p className="mt-3 text-sm" style={{ color: "#7D7168" }}>
           {score === total
             ? "Perfect score — outstanding!"
             : score >= Math.ceil(total * 0.7)
@@ -130,7 +130,7 @@ function ScoreScreen({
             key={s}
             size={36}
             fill={s <= stars ? "#F7B035" : "transparent"}
-            style={{ color: s <= stars ? "#F7B035" : "#30363B" }}
+            style={{ color: s <= stars ? "#F7B035" : "#C8BDB5" }}
           />
         ))}
       </div>
@@ -138,13 +138,13 @@ function ScoreScreen({
       {/* Score */}
       <div
         className="px-10 py-6 rounded-2xl flex flex-col items-center gap-1 w-full"
-        style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}
+        style={{ backgroundColor: "#F5EEE6", border: "1px solid #E2D5C8" }}
       >
-        <span className="text-5xl font-black" style={{ color: "#E8ECF0" }}>
+        <span className="text-5xl font-black" style={{ color: "#1A1512" }}>
           {score}
-          <span className="text-2xl font-normal" style={{ color: "#9CA3AF" }}>/{total}</span>
+          <span className="text-2xl font-normal" style={{ color: "#7D7168" }}>/{total}</span>
         </span>
-        <span className="text-sm" style={{ color: "#9CA3AF" }}>correct answers</span>
+        <span className="text-sm" style={{ color: "#7D7168" }}>correct answers</span>
       </div>
 
       {/* XP earned */}
@@ -162,7 +162,7 @@ function ScoreScreen({
         <button
           onClick={onRetry}
           className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
-          style={{ backgroundColor: "#262C30", border: "1px solid #30363B", color: "#E8ECF0" }}
+          style={{ backgroundColor: "#F5EEE6", border: "1px solid #E2D5C8", color: "#1A1512" }}
         >
           <RotateCcw size={15} />
           Try Again
@@ -287,7 +287,7 @@ export default function GenericQuiz({
                   r === "correct" ? "#27C07B" :
                   r === "wrong"   ? "#F05252" :
                   i === idx       ? "#489BFC" :
-                  "#30363B",
+                  "#D4C8BC",
               }}
             />
           ))}
@@ -314,23 +314,24 @@ export default function GenericQuiz({
 
       {/* ── Question card ── */}
       <div
-        className="rounded-2xl overflow-hidden shadow-2xl transition-colors duration-200"
+        className="rounded-2xl overflow-hidden shadow-sm transition-colors duration-200"
         style={{
-          backgroundColor: "#1E2225",
+          backgroundColor: "#FFFFFF",
           border: `2px solid ${
             phase === "feedback"
               ? isCorrect
                 ? "#27C07B"
                 : "#F05252"
-              : "#30363B"
+              : "#E2D5C8"
           }`,
+          boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
         }}
       >
         {/* Subject pill */}
         <div className="px-6 pt-4 pb-0 flex items-center">
           <span
             className="text-xs font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: "#489BFC18", color: "#489BFC" }}
+            style={{ backgroundColor: "#EBF5FF", color: "#1D70C9" }}
           >
             {q.subject}
           </span>
@@ -343,14 +344,14 @@ export default function GenericQuiz({
           {isEquation ? (
             <div
               className="font-mono text-3xl font-bold text-center leading-snug"
-              style={{ color: "#E8ECF0" }}
+              style={{ color: "#1A1512" }}
             >
               {q.prompt}
             </div>
           ) : (
             <p
               className="text-lg font-semibold leading-relaxed"
-              style={{ color: "#E8ECF0" }}
+              style={{ color: "#1A1512" }}
             >
               {q.prompt}
             </p>
@@ -393,9 +394,9 @@ export default function GenericQuiz({
               <div
                 className="mt-2 p-3 rounded-xl text-sm"
                 style={{
-                  backgroundColor: "#262C30",
-                  border: "1px solid #F7B03530",
-                  color: "#F7B035",
+                  backgroundColor: "#FEF3C7",
+                  border: "1px solid #F7B03550",
+                  color: "#92400E",
                 }}
               >
                 {q.hint}
@@ -409,8 +410,8 @@ export default function GenericQuiz({
           <div
             className="px-6 py-5 border-t flex flex-col gap-3"
             style={{
-              borderColor: isCorrect ? "#27C07B40" : "#F0525240",
-              backgroundColor: isCorrect ? "#27C07B0D" : "#F052520D",
+              borderColor: isCorrect ? "#27C07B50" : "#F0525050",
+              backgroundColor: isCorrect ? "#F0FDF8" : "#FEF2F2",
             }}
           >
             <div className="flex items-start gap-3">
@@ -430,13 +431,13 @@ export default function GenericQuiz({
               <div className="flex-1 min-w-0">
                 <p
                   className="font-semibold"
-                  style={{ color: isCorrect ? "#27C07B" : "#F05252" }}
+                  style={{ color: isCorrect ? "#166B4A" : "#991B1B" }}
                 >
-                  {isCorrect ? "Correct!" : "Not quite — here's why:"}
+                  {isCorrect ? "🎉 Correct!" : "Not quite — here's why:"}
                 </p>
                 <p
                   className="mt-1 text-sm leading-relaxed"
-                  style={{ color: "#9CA3AF" }}
+                  style={{ color: "#3A3028" }}
                 >
                   {q.explanation}
                 </p>

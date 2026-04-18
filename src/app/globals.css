@@ -2,19 +2,21 @@
 @import "mafs/core.css";
 
 :root {
-  /* Brilliant color palette */
-  --brilliant-bg: #121517;
-  --brilliant-surface: #1E2225;
-  --brilliant-surface-2: #262C30;
-  --brilliant-border: #30363B;
+  /* Cream warm palette */
+  --brilliant-bg: #FAF8F4;
+  --brilliant-sidebar: #F0E8DF;
+  --brilliant-surface: #FFFFFF;
+  --brilliant-surface-2: #F5EEE6;
+  --brilliant-border: #E2D5C8;
   --brilliant-primary: #489BFC;
   --brilliant-success: #27C07B;
   --brilliant-accent: #F7B035;
   --brilliant-error: #F05252;
-  --brilliant-text: #E8ECF0;
-  --brilliant-muted: #9CA3AF;
-  --background: #121517;
-  --foreground: #E8ECF0;
+  --brilliant-text: #1A1512;
+  --brilliant-text-2: #3A3028;
+  --brilliant-muted: #7D7168;
+  --background: #FAF8F4;
+  --foreground: #1A1512;
 }
 
 @theme inline {

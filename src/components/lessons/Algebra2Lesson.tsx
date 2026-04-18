@@ -17,8 +17,8 @@ function Parabola({ a = 1, h = 0, k = 0, label }: { a?: number; h?: number; k?: 
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-xs">
       {ticks.map(n => (
         <g key={n}>
-          <line x1={sx(n)} y1={0} x2={sx(n)} y2={H} stroke="#262C30" strokeWidth="1" />
-          <line x1={0} y1={sy(n)} x2={W} y2={sy(n)} stroke="#262C30" strokeWidth="1" />
+          <line x1={sx(n)} y1={0} x2={sx(n)} y2={H} stroke="#E2D5C8" strokeWidth="1" />
+          <line x1={0} y1={sy(n)} x2={W} y2={sy(n)} stroke="#E2D5C8" strokeWidth="1" />
         </g>
       ))}
       <line x1={0} y1={oy} x2={W} y2={oy} stroke="#9CA3AF" strokeWidth="1.5" />
@@ -47,7 +47,7 @@ function IndexLawTable() {
     <div className="flex flex-col gap-1.5 w-full">
       {laws.map((l, i) => (
         <div key={i} className="grid grid-cols-3 items-center px-3 py-2 rounded-lg"
-          style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}>
+          style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8" }}>
           <span className="font-mono text-sm font-bold" style={{ color: "#489BFC" }}>{l.law}</span>
           <span className="font-mono text-sm text-center font-bold" style={{ color: "#27C07B" }}>= {l.result}</span>
           <span className="font-mono text-xs text-right" style={{ color: "#9CA3AF" }}>{l.example}</span>

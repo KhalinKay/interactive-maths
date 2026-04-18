@@ -9,12 +9,12 @@ function NumberLine({ highlights }: { highlights: { pos: number; label: string; 
   function toX(n: number) { return (n - min) * scale; }
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full max-w-lg">
-      <line x1={0} y1={35} x2={W} y2={35} stroke="#30363B" strokeWidth="2" />
-      <polygon points={`${W},35 ${W - 7},30 ${W - 7},40`} fill="#30363B" />
-      <polygon points={`0,35 7,30 7,40`} fill="#30363B" />
+      <line x1={0} y1={35} x2={W} y2={35} stroke="#7D7168" strokeWidth="2" />
+      <polygon points={`${W},35 ${W - 7},30 ${W - 7},40`} fill="#7D7168" />
+      <polygon points={`0,35 7,30 7,40`} fill="#7D7168" />
       {Array.from({ length: max - min + 1 }, (_, i) => i + min).map(n => (
         <g key={n}>
-          <line x1={toX(n)} y1={28} x2={toX(n)} y2={42} stroke={n === 0 ? "#9CA3AF" : "#30363B"} strokeWidth={n === 0 ? 2 : 1} />
+          <line x1={toX(n)} y1={28} x2={toX(n)} y2={42} stroke={n === 0 ? "#7D7168" : "#D4C8BC"} strokeWidth={n === 0 ? 2 : 1} />
           <text x={toX(n)} y={57} textAnchor="middle" fontSize="11" fill="#9CA3AF">{n}</text>
         </g>
       ))}
@@ -41,7 +41,7 @@ function BODMASPyramid() {
         <div key={i} className="flex items-center gap-3 px-4 py-2.5 rounded-xl"
           style={{ backgroundColor: `${r.color}14`, border: `1px solid ${r.color}30` }}>
           <span className="w-8 text-center font-black text-base" style={{ color: r.color }}>{r.letter}</span>
-          <span className="text-sm font-medium" style={{ color: "#E8ECF0" }}>{r.full}</span>
+          <span className="text-sm font-medium" style={{ color: "#1A1512" }}>{r.full}</span>
           <span className="ml-auto text-xs font-semibold" style={{ color: "#9CA3AF" }}>Step {i + 1}</span>
         </div>
       ))}
@@ -53,9 +53,9 @@ function BODMASPyramid() {
 function PowerBlock({ base, exp, expansion, result }: { base: number; exp: number; expansion: string; result: number }) {
   return (
     <div className="flex items-center gap-4 px-6 py-5 rounded-2xl w-full justify-center"
-      style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}>
+      style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2D5C8" }}>
       <div className="text-center">
-        <div className="text-4xl font-black" style={{ color: "#E8ECF0" }}>
+        <div className="text-4xl font-black" style={{ color: "#1A1512" }}>
           {base}<sup style={{ fontSize: "1.5rem", color: "#F7B035" }}>{exp}</sup>
         </div>
         <div className="text-xs mt-1" style={{ color: "#9CA3AF" }}>{base} to the power {exp}</div>
