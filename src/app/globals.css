@@ -1,8 +1,20 @@
 @import "tailwindcss";
+@import "mafs/core.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brilliant color palette */
+  --brilliant-bg: #121517;
+  --brilliant-surface: #1E2225;
+  --brilliant-surface-2: #262C30;
+  --brilliant-border: #30363B;
+  --brilliant-primary: #489BFC;
+  --brilliant-success: #27C07B;
+  --brilliant-accent: #F7B035;
+  --brilliant-error: #F05252;
+  --brilliant-text: #E8ECF0;
+  --brilliant-muted: #9CA3AF;
+  --background: #121517;
+  --foreground: #E8ECF0;
 }
 
 @theme inline {
@@ -12,12 +24,18 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Override Mafs default light background */
+.mafs-root {
+  background: var(--brilliant-surface) !important;
 }
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--brilliant-bg); }
+::-webkit-scrollbar-thumb { background: var(--brilliant-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brilliant-muted); }
+
+* { box-sizing: border-box; }
 
 body {
   background: var(--background);

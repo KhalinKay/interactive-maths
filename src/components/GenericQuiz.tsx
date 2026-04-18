@@ -1,0 +1,418 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import confetti from "canvas-confetti";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Flame,
+  Lightbulb,
+  RotateCcw,
+  Star,
+  Trophy,
+  XCircle,
+} from "lucide-react";
+import { GenericQuestion } from "@/lib/subjectQuestions";
+
+// ── Shared answer button ───────────────────────────────────────────────────────
+
+type BtnState = "idle" | "correct" | "wrong";
+
+function AnswerBtn({
+  label,
+  state,
+  onClick,
+  disabled,
+}: {
+  label: string;
+  state: BtnState;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  const styles: Record<BtnState, { bg: string; border: string; color: string }> = {
+    idle: { bg: "#262C30", border: "#30363B", color: "#E8ECF0" },
+    correct: { bg: "#27C07B18", border: "#27C07B", color: "#27C07B" },
+    wrong: { bg: "#F0525218", border: "#F05252", color: "#F05252" },
+  };
+  const s = styles[state];
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className="w-full rounded-xl font-semibold text-base px-4 py-3.5 text-left transition-all duration-150 active:scale-95 disabled:cursor-default enabled:hover:brightness-110"
+      style={{
+        backgroundColor: s.bg,
+        border: `2px solid ${s.border}`,
+        color: s.color,
+      }}
+    >
+      {label}
+    </button>
+  );
+}
+
+// ── Score screen ───────────────────────────────────────────────────────────────
+
+function ScoreScreen({
+  score,
+  total,
+  subject,
+  onRetry,
+  onHome,
+}: {
+  score: number;
+  total: number;
+  subject: string;
+  onRetry: () => void;
+  onHome: () => void;
+}) {
+  const stars = score >= total ? 3 : score >= Math.ceil(total * 0.7) ? 2 : score >= Math.ceil(total * 0.5) ? 1 : 0;
+  const xp = score * 50;
+
+  return (
+    <div className="flex flex-col items-center gap-8 py-10 max-w-md mx-auto">
+      <div
+        className="w-20 h-20 rounded-2xl flex items-center justify-center"
+        style={{ backgroundColor: "#27C07B18", border: "2px solid #27C07B40" }}
+      >
+        <Trophy size={40} style={{ color: "#27C07B" }} />
+      </div>
+
+      <div className="text-center">
+        <h2 className="text-3xl font-bold" style={{ color: "#E8ECF0" }}>
+          Quiz Complete!
+        </h2>
+        <p className="mt-1" style={{ color: "#9CA3AF" }}>
+          {subject}
+        </p>
+        <p className="mt-3 text-base" style={{ color: "#9CA3AF" }}>
+          {score === total
+            ? "Perfect score — outstanding!"
+            : score >= Math.ceil(total * 0.7)
+            ? "Great work! Keep it up."
+            : "Good effort — try again to improve!"}
+        </p>
+      </div>
+
+      <div className="flex gap-3">
+        {[1, 2, 3].map((s) => (
+          <Star
+            key={s}
+            size={40}
+            fill={s <= stars ? "#F7B035" : "transparent"}
+            style={{ color: s <= stars ? "#F7B035" : "#30363B" }}
+          />
+        ))}
+      </div>
+
+      <div
+        className="px-10 py-6 rounded-2xl flex flex-col items-center gap-1"
+        style={{ backgroundColor: "#1E2225", border: "1px solid #30363B" }}
+      >
+        <span className="text-5xl font-black" style={{ color: "#E8ECF0" }}>
+          {score}
+          <span className="text-2xl font-normal" style={{ color: "#9CA3AF" }}>
+            /{total}
+          </span>
+        </span>
+        <span className="text-sm" style={{ color: "#9CA3AF" }}>
+          correct answers
+        </span>
+      </div>
+
+      <div
+        className="flex items-center gap-2 px-6 py-3 rounded-xl"
+        style={{ backgroundColor: "#F7B03518", border: "1px solid #F7B03540" }}
+      >
+        <Star size={18} fill="#F7B035" style={{ color: "#F7B035" }} />
+        <span className="font-semibold" style={{ color: "#F7B035" }}>
+          +{xp} XP earned
+        </span>
+      </div>
+
+      <div className="flex gap-4">
+        <button
+          onClick={onRetry}
+          className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
+          style={{ backgroundColor: "#262C30", border: "1px solid #30363B", color: "#E8ECF0" }}
+        >
+          <RotateCcw size={16} />
+          Try Again
+        </button>
+        <button
+          onClick={onHome}
+          className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
+          style={{ backgroundColor: "#489BFC", color: "white" }}
+        >
+          All Courses
+          <ArrowRight size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Main GenericQuiz component ─────────────────────────────────────────────────
+
+export default function GenericQuiz({
+  generate,
+  total = 8,
+  onHome,
+}: {
+  /** Called fresh each quiz session; should return `total` questions */
+  generate: (n: number) => GenericQuestion[];
+  total?: number;
+  onHome: () => void;
+}) {
+  const [questions, setQuestions] = useState<GenericQuestion[]>(() => generate(total));
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState<"question" | "feedback" | "complete">("question");
+  const [selected, setSelected] = useState<number | null>(null);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+  const confettiFiredRef = useRef(false);
+
+  const q = questions[idx];
+
+  useEffect(() => {
+    if (phase === "complete" && score === total && !confettiFiredRef.current) {
+      confettiFiredRef.current = true;
+      confetti({
+        particleCount: 140,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ["#489BFC", "#27C07B", "#F7B035"],
+      });
+    }
+  }, [phase, score, total]);
+
+  function submit(choiceIdx: number) {
+    if (phase !== "question") return;
+    const correct = choiceIdx === q.correctIndex;
+    setSelected(choiceIdx);
+    setIsCorrect(correct);
+    setScore((s) => (correct ? s + 1 : s));
+    setStreak((s) => (correct ? s + 1 : 0));
+    setPhase("feedback");
+  }
+
+  function next() {
+    if (idx + 1 >= total) {
+      setPhase("complete");
+    } else {
+      setIdx((i) => i + 1);
+      setPhase("question");
+      setSelected(null);
+      setShowHint(false);
+    }
+  }
+
+  function retry() {
+    confettiFiredRef.current = false;
+    setQuestions(generate(total));
+    setIdx(0);
+    setPhase("question");
+    setScore(0);
+    setStreak(0);
+    setSelected(null);
+    setShowHint(false);
+  }
+
+  if (phase === "complete") {
+    return (
+      <ScoreScreen
+        score={score}
+        total={total}
+        subject={q?.subject ?? ""}
+        onRetry={retry}
+        onHome={onHome}
+      />
+    );
+  }
+
+  const progress = (idx / total) * 100;
+  const isEquation = q.equation && q.prompt.length < 70;
+
+  return (
+    <div className="flex flex-col gap-5 max-w-2xl mx-auto w-full">
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium" style={{ color: "#9CA3AF" }}>
+            Question {idx + 1} of {total}
+          </span>
+          {streak >= 2 && (
+            <div
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+              style={{ backgroundColor: "#F7B03520", color: "#F7B035" }}
+            >
+              <Flame size={12} />
+              {streak} streak!
+            </div>
+          )}
+        </div>
+        <div
+          className="flex items-center gap-1.5 text-sm font-semibold"
+          style={{ color: "#27C07B" }}
+        >
+          <CheckCircle2 size={14} />
+          {score} correct
+        </div>
+      </div>
+
+      {/* ── Progress bar ── */}
+      <div
+        className="h-2 rounded-full overflow-hidden"
+        style={{ backgroundColor: "#30363B" }}
+      >
+        <div
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${progress}%`, backgroundColor: "#489BFC" }}
+        />
+      </div>
+
+      {/* ── Question card ── */}
+      <div
+        className="rounded-2xl overflow-hidden shadow-2xl transition-colors duration-200"
+        style={{
+          backgroundColor: "#1E2225",
+          border: `2px solid ${
+            phase === "feedback"
+              ? isCorrect
+                ? "#27C07B"
+                : "#F05252"
+              : "#30363B"
+          }`,
+        }}
+      >
+        {/* Subject pill */}
+        <div className="px-6 pt-4 pb-0 flex items-center">
+          <span
+            className="text-xs font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: "#489BFC18", color: "#489BFC" }}
+          >
+            {q.subject}
+          </span>
+        </div>
+
+        {/* Prompt */}
+        <div
+          className={`px-6 py-6 flex items-center ${isEquation ? "justify-center" : "justify-start"}`}
+        >
+          {isEquation ? (
+            <div
+              className="font-mono text-3xl font-bold text-center leading-snug"
+              style={{ color: "#E8ECF0" }}
+            >
+              {q.prompt}
+            </div>
+          ) : (
+            <p
+              className="text-lg font-semibold leading-relaxed"
+              style={{ color: "#E8ECF0" }}
+            >
+              {q.prompt}
+            </p>
+          )}
+        </div>
+
+        {/* Choices */}
+        <div className="px-6 pb-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {q.choices.map((choice, i) => {
+            let state: BtnState = "idle";
+            if (phase === "feedback") {
+              if (i === q.correctIndex) state = "correct";
+              else if (i === selected) state = "wrong";
+            }
+            return (
+              <AnswerBtn
+                key={`${choice}-${i}`}
+                label={choice}
+                state={state}
+                onClick={() => submit(i)}
+                disabled={phase === "feedback"}
+              />
+            );
+          })}
+        </div>
+
+        {/* Hint toggle */}
+        {phase === "question" && q.hint && (
+          <div className="px-6 pb-4">
+            <button
+              onClick={() => setShowHint((h) => !h)}
+              className="flex items-center gap-2 text-sm font-medium transition-colors"
+              style={{ color: showHint ? "#ffc855" : "#F7B035" }}
+            >
+              <Lightbulb size={15} />
+              {showHint ? "Hide hint" : "Show hint"}
+            </button>
+            {showHint && (
+              <div
+                className="mt-2 p-3 rounded-xl text-sm"
+                style={{
+                  backgroundColor: "#262C30",
+                  border: "1px solid #F7B03530",
+                  color: "#F7B035",
+                }}
+              >
+                {q.hint}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Feedback strip ── */}
+        {phase === "feedback" && (
+          <div
+            className="px-6 py-5 border-t flex flex-col gap-3"
+            style={{
+              borderColor: isCorrect ? "#27C07B40" : "#F0525240",
+              backgroundColor: isCorrect ? "#27C07B0D" : "#F052520D",
+            }}
+          >
+            <div className="flex items-start gap-3">
+              {isCorrect ? (
+                <CheckCircle2
+                  size={22}
+                  className="shrink-0 mt-0.5"
+                  style={{ color: "#27C07B" }}
+                />
+              ) : (
+                <XCircle
+                  size={22}
+                  className="shrink-0 mt-0.5"
+                  style={{ color: "#F05252" }}
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                <p
+                  className="font-semibold"
+                  style={{ color: isCorrect ? "#27C07B" : "#F05252" }}
+                >
+                  {isCorrect ? "Correct!" : "Not quite — here's why:"}
+                </p>
+                <p
+                  className="mt-1 text-sm leading-relaxed"
+                  style={{ color: "#9CA3AF" }}
+                >
+                  {q.explanation}
+                </p>
+              </div>
+              <button
+                onClick={next}
+                className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all active:scale-95 hover:brightness-110"
+                style={{ backgroundColor: "#489BFC", color: "white" }}
+              >
+                {idx + 1 >= total ? "Finish" : "Next"}
+                <ArrowRight size={15} />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
